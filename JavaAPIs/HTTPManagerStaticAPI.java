@@ -1,9 +1,9 @@
 // import org.apache.http.client.methods
+import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.StringBuffer;
-import java.net.URL;
 import java.io.IOException;
 
 public class HTTPManagerStaticAPI {
@@ -16,18 +16,19 @@ public class HTTPManagerStaticAPI {
         String response = "";
 
         try {
-            String url = "http://www.google.com/search?q=mkyong";
+            // Create a connection to the url
             String beers_url = "https://api.punkapi.com/v2/beers?beer_name=nuclear";
             URL obj = new URL(beers_url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             
+            // set neccesary request properties
             con.setRequestMethod("GET");
             String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
             String userAgent2 = "Mozilla/5.0";
-            // System.out.println("user agent: "+userAgent);
             con.setRequestProperty("User-Agent", userAgent2);
 
 
+            // read the reponse comming in using buffer
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -37,7 +38,9 @@ public class HTTPManagerStaticAPI {
                 content.append(inputLine);
             }
             
-            response = content.toString();    
+            response = content.toString();
+
+            // close request and buffer    
             in.close();
             con.disconnect();
 
